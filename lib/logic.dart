@@ -1,12 +1,56 @@
-class Task{
+import 'dart:convert';
+import 'dart:io';
+
+class Task {
+  String time;
+  String task;
+  String description;
+
+  Task({
+    required this.time,
+    required this.task,
+    String? description,
+  }) : description = description ?? '';
+
   
-String time;
-String task;
-String description;
+  Map<String, dynamic> toJson() {
+    return {
+      'time': time,
+      'task': task,
+      'description': description,
+    };
+  }
 
-  Task({required this.time, required this.task, String? description}):description=description??'';
-
+  
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      time: json['time'],
+      task: json['task'],
+      description: json['description'],
+    );
+  }
 }
+
+
+Future<void> saveTasks(List<Task> tasks, String filePath) async {
+  final file = File(filePath);
+  final jsonList = tasks.map((task) => task.toJson()).toList();
+  await file.writeAsString(jsonEncode(jsonList));
+}
+
+
+Future<List<Task>> loadTasks(String filePath) async {
+  final file = File(filePath);
+  if (!await file.exists()) {
+    return []; 
+  }
+  final jsonString = await file.readAsString();
+  final jsonList = jsonDecode(jsonString) as List;
+  return jsonList.map((json) => Task.fromJson(json)).toList();
+}
+
+
+
 
 String timeFormating(){
   DateTime now = DateTime.now();
@@ -21,9 +65,8 @@ String timeFormating(){
 }
 
 
-List<Task> tasks=[
-  Task(time: timeFormating(),
-  task: 'Ebat blyat',
-  // description: 'спасите меня я заебался писать этот код бляяяяяяяяяяяяяяяяяяяяяяяяяя'
-  )
-];
+
+
+
+
+List<Task> tasks=[];
