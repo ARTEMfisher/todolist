@@ -113,7 +113,7 @@ class _AppState extends State<App> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       TextFormField(
-                        maxLength: 30,
+                        maxLength: 20,
                         decoration: const InputDecoration(
                           hintText: 'Задача',
                           hintStyle: TextStyle(fontWeight: FontWeight.w300),
