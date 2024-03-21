@@ -52,8 +52,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 6),
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 6),
           child: CircleAvatar(
                   
                   foregroundImage: AssetImage('data/mai.jpg'),
