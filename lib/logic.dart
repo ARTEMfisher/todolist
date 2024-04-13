@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
 class Task {
   String time;
   String task;
   String description;
+  bool priority;
 
   Task({
     required this.time,
     required this.task,
     String? description,
+    required this.priority
   }) : description = description ?? '';
 
   
@@ -18,6 +22,7 @@ class Task {
       'time': time,
       'task': task,
       'description': description,
+      'priority' : priority,
     };
   }
 
@@ -27,6 +32,7 @@ class Task {
       time: json['time'],
       task: json['task'],
       description: json['description'],
+      priority: json['priority'],
     );
   }
 }
@@ -66,6 +72,37 @@ String timeFormating(){
 
 
 
+
+
+
+bool priority = false;
+
+class PriorityButton extends StatefulWidget {
+  const PriorityButton({super.key});
+
+  @override
+  State<PriorityButton> createState() => _PriorityButtonState();
+}
+
+class _PriorityButtonState extends State<PriorityButton> {
+  @override
+  Widget build(BuildContext context) {
+    return priority?Text("Задача сделана приоритетной"):
+      OutlinedButton(
+                    
+        onPressed: (){
+        priority= !priority;
+        print(priority);
+        setState(() {
+          
+        });
+
+      }, 
+      child: Text("Сделать приоритетной задачей",style: TextStyle(
+        fontWeight: FontWeight.w200
+      ),));
+  }
+}
 
 
 
